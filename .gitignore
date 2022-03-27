@@ -1,3 +1,6 @@
+#admin bootstrap template
+admin_bootstrap_template/vendor
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
