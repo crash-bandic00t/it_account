@@ -284,7 +284,8 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <h1 class="h3 mb-2 text-gray-800">Cisco 2960X</h1>
-                    <p class="mb-4">501-A1</p>
+                    <p class="mb-1">501-A1, IP address: 10.100.176.1</p>
+                    <p class="mb-4">Комплекс: Яровая</p>
 
                     <!-- DataTales Example -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -300,52 +301,138 @@
                       </ul>
                       <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active mt-3" id="ports" role="tabpanel" aria-labelledby="ports-tab">
-                            <table class="table table-borderless">
+                            <table class="table table-responsive table-borderless">
+                                <thead class="thead-light">
+                                  <tr>
+                                    <th scope="col" class="col-1 text-center">Interface</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Vlan</th>
+                                        <th scope="col">Destination</th>
+                                        <th scope="col">Comment</th>
+                                        <th scope="col">Commutation ID</th>
+                                        <th scope="col"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-success">
+                                        <th scope="row" class="text-center">Gi 1/0/1</th>
+                                        <td>Trunk</td>
+                                        <td>76,97,175,76,97,175,76,97,175,76,97,175</td>
+                                        <td>502-A3-24</td>
+                                        <td>новая коммутация новая коммутация</td>
+                                        <td>
+                                            43156
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-danger">
+                                        <th scope="row" class="text-center">Gi 1/0/2</th>
+                                        <td>Access</td>
+                                        <td>999</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td class="text-center">
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-success">
+                                        <th scope="row" class="text-center">Gi 1/0/3</th>
+                                        <td>Trunk</td>
+                                        <td>76,97,175</td>
+                                        <td>502-A3-24</td>
+                                        <td>новая коммутация</td>
+                                        <td>
+                                            43156
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-borderless mt-5">
                                 <thead>
                                     <tr class="d-flex">
-                                        <th scope="col" class="col-1 text-center">№</th>
-                                        <th scope="col" class="col-2">Куда</th>
-                                        <th scope="col" class="col-3">ID коммутации</th>
-                                        <th scope="col" class="col-3">Описание</th>
+                                        <th scope="col" class="col-1 text-center">Interface</th>
+                                        <th scope="col" class="col-1">Type</th>
+                                        <th scope="col" class="col-1">Vlan</th>
+                                        <th scope="col" class="col-1">Destination</th>
+                                        <th scope="col" class="col-4">Comment</th>
+                                        <th scope="col" class="col-1">Commutation ID</th>
                                         <th scope="col" class="col-3"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="d-flex table-success">
                                         <th scope="row" class="col-1 text-center">Gi 1/0/1</th>
-                                        <td class="col-2">502-A3-24</td>
-                                        <td class="col-3">4587</td>
-                                        <td class="col-3">новая коммутация</td>
+                                        <td class="col-1">Trunk</td>
+                                        <td class="col-1">76,97,175</td>
+                                        <td class="col-1">502-A3-24</td>
+                                        <td class="col-4">новая коммутация</td>
+                                        <td class="col-1">
+                                            43156
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
+                                        </td>
                                         <td class="col-3 text-center">
-                                            <a href="equipment.html" class="btn-sm btn-warning">Изменить</a>
-                                            <a href="equipment.html" class="btn-sm btn-primary">Подробнее</a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
                                         </td>
                                     </tr>
                                     <tr class="d-flex table-danger">
                                         <th scope="row" class="col-1 text-center">Gi 1/0/2</th>
-                                        <td class="col-2">602-A15-7</td>
-                                        <td class="col-3">-</td>
-                                        <td class="col-3">-</td>
+                                        <td class="col-1">Access</td>
+                                        <td class="col-1">999</td>
+                                        <td class="col-1">-</td>
+                                        <td class="col-4">-</td>
+                                        <td class="col-1">-</td>
                                         <td class="col-3 text-center">
-                                            <a href="equipment.html" class="btn-sm btn-warning">Изменить</a>
-                                            <a href="equipment.html" class="btn-sm btn-primary">Подробнее</a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
                                         </td>
                                     </tr>
                                     <tr class="d-flex table-success">
                                         <th scope="row" class="col-1 text-center">Gi 1/0/3</th>
-                                        <td class="col-2">601-A3-19</td>
-                                        <td class="col-3">1147</td>
-                                        <td class="col-3">МТС</td>
+                                        <td class="col-1">Access</td>
+                                        <td class="col-1">76</td>
+                                        <td class="col-1">601-A10-8</td>
+                                        <td class="col-4">ftp</td>
+                                        <td class="col-1">
+                                            16745
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
+                                        </td>
                                         <td class="col-3 text-center">
-                                            <a href="equipment.html" class="btn-sm btn-warning">Изменить</a>
-                                            <a href="equipment.html" class="btn-sm btn-primary">Подробнее</a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
                                         </td>
                                     </tr>
+                                    <tr class="d-flex table-danger">
+                                        <th scope="row" class="col-1 text-center">Gi 1/0/4</th>
+                                        <td class="col-1">Access</td>
+                                        <td class="col-1">999</td>
+                                        <td class="col-1">-</td>
+                                        <td class="col-4">-</td>
+                                        <td class="col-1">-</td>
+                                        <td class="col-3 text-center">
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                            <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
+                                        </td>
+                                    </tr>                                    
                                 </tbody>
                             </table>
                         </div>
                         <div class="tab-pane fade mt-3" id="desc" role="tabpanel" aria-labelledby="desc-tab">
-                            Описание
+                            <div class="row">
+                                <div class="col-1">IP address</div>
+                                <div class="col-2">10.100.76.1</div>
+                            </div>
                         </div>
                         <div class="tab-pane fade mt-3" id="photo" role="tabpanel" aria-labelledby="photo-tab">
                             Фото

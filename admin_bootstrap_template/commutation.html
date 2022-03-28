@@ -278,82 +278,59 @@
 
                 </nav>
                 <!-- End of Topbar -->
-
+                
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <h1 class="h3 mb-2 text-gray-800">Все коммутации</h1>
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-center mb-5">
-                        <h1 class="h3 mb-0 text-gray-800">Добро пожаловать!</h1>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row justify-content-md-center">
-
-                        <!-- ЦАЗ 5 -->
-                        <div class="col-xl-5 col-md-6 mb-4">
-                            <a href="rack.html">
-                                <div class="card border-bottom-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Автозал 5 этажа</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">ЦАЗ 5</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-server fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <!-- ЦАЗ 6 -->
-                        <div class="col-xl-5 col-md-6 mb-4">
-                            <a href="rack.html">
-                                <div class="card border-bottom-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Автозал 6 этажа</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">ЦАЗ 6</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-server fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row justify-content-md-center">
-                        <div class="col-xl-10 col-md-6 mb-4">
-                            <a href="commutation.html">
-                                <div class="card border-bottom-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Все кроссировки</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Коммутации</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-network-wired fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    <table class="table table-responsive table-borderless table-striped">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col" class="col-1 text-center">ID</th>
+                                <th scope="col">From</th>
+                                <th scope="col">To</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Description</th>
+                                <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-center">15644</th>
+                                <td>501-A1-25</td>
+                                <td>502-A4-30</td>
+                                <td>Яровая</td>
+                                <td>новая ИСБД</td>
+                                <td class="text-center">
+                                    <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                    <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-center">15645</th>
+                                <td>501-A1-25</td>
+                                <td>502-A4-30</td>
+                                <td>Оператор связи</td>
+                                <td>новый источник</td>
+                                <td class="text-center">
+                                    <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                    <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-center">15646</th>
+                                <td>601-A2-17</td>
+                                <td>602-A17-28</td>
+                                <td>Яровая</td>
+                                <td>новая ИСБД</td>
+                                <td class="text-center">
+                                    <a href="equipment.html" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
+                                    <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
