@@ -166,7 +166,7 @@ a {
 
 a:hover {
   color: #224abe;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:not([href]):not([class]) {
@@ -1485,7 +1485,7 @@ pre code {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #858796;
+  color: black;
 }
 
 .table th,
@@ -4060,8 +4060,8 @@ input[type="button"].btn-block {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: #6e707e;
-  background-color: #fff;
-  border-color: #dddfeb #dddfeb #fff;
+  /* background-color: #fff; */
+  border-color: #dddfeb #dddfeb #f8f9fc;
 }
 
 .nav-tabs .dropdown-menu {

@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">{{ autozal.name }}</h1>
+<p class="mb-1">{{ autozal.desc }}</p>
+<div class="row">
+    <div class="col-4">
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col" colspan="2" class="text-center">Телекоммуникационные шкафы</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for rack in autozal.racks.all %}
+                <tr>
+                    <th scope="row" class="text-center align-middle">ТШ {{ rack.number }}</th>
+                    <td class="text-center">
+                        <a href="{% url 'main:rack' rack.autozal.slug rack.number %}" class="btn btn-primary"><i class="fas fa-arrow-right"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
