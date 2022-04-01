@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
 from .models import Autozal, Rack, Equipment
 from .forms import EquipmentAddForm
+from .validators import add_equipment_validator
 
 #главная страница
 def index(request):
@@ -30,8 +31,16 @@ def rack(request, autozal_slug, rack_number):
     return render(request, 'main/rack.html', data)
 
 # добавление нового оборудовния
-class EquipmentAddView(CreateView):
-    model = Equipment
-    form_class = EquipmentAddForm
-    template_name = 'main/equipment-add.html'
-    success_url = reverse_lazy('main:index')
+def add_equipment(request, autozal_slug, rack_number):
+    if request.method == 'POST':
+        form = EquipmentAddForm(request.POST, request.FILES)
+        if add_equipment_validator(request.POST):
+            print('Валидация прошла')
+        else:
+            print('Валидация не пройдена')
+    else:
+        form = EquipmentAddForm()
+    data = {
+        'form': form,
+    }
+    return render(request, 'main/equipment-add.html', data)

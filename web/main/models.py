@@ -11,7 +11,7 @@ class Autozal(models.Model):
     name = models.CharField(verbose_name='Наименование', max_length=10)
     floor = models.PositiveIntegerField(verbose_name='Этаж', blank=True)
     desc = models.TextField(verbose_name='Описание', max_length=500, blank=True)
-    slug = models.SlugField(blank=True)
+    slug = models.SlugField(blank=True, unique=True)
 
     # превращаем имя автозала в slug
     def save(self, *args, **kwargs):
@@ -28,7 +28,7 @@ class Rack(models.Model):
         verbose_name = 'Стойка'
         verbose_name_plural = 'Стойки'
     autozal = models.ForeignKey(Autozal, verbose_name='Автозал', related_name='racks', on_delete=models.CASCADE)
-    number = models.PositiveIntegerField(verbose_name='Номер')
+    number = models.PositiveIntegerField(verbose_name='Номер', unique=True)
     desc = models.TextField(verbose_name='Описание', max_length=500, blank=True, default='-')
 
     def __str__(self):
@@ -36,6 +36,7 @@ class Rack(models.Model):
 
 class Equipment(models.Model):
     EQUPMENT_TYPES = (
+        ('', 'Выберите тип...'),
         ('active','Активное оборудование'),
         ('passive', 'Пассивное оборудование'),
     )
@@ -47,9 +48,8 @@ class Equipment(models.Model):
 
     equipment_type = models.CharField('Тип оборудования', max_length=100, choices=EQUPMENT_TYPES, blank=True)
     rack = models.ForeignKey(Rack, verbose_name='Стойка', related_name='equipment', on_delete=models.CASCADE)
-    place = models.CharField('Место', max_length=5)
+    place = models.CharField('Место', max_length=5, unique=True)
     name = models.CharField('Наименование', max_length=100)
-    model = models.CharField('Модель', max_length=50, blank=True)
     owner = models.CharField('Владелец', max_length=50)
     desc = models.CharField('Описание', max_length=500, blank=True)
     port_cnt = models.PositiveIntegerField('Количество портов')
