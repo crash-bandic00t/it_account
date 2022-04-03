@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1 class="h3 mb-3 text-gray-800">Вы действительно хотите удалить оборудование {{ equip.name }}?</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Удалить" class="btn btn-danger">
+    <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">Назад</a>
+</form>
+{% endblock content %}

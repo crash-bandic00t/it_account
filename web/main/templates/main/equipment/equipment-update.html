@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1 class="h3 mb-3 text-gray-800">Редактировать оборудование</h1>
+<div class="row">
+    <div class="col-12">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="row mb-2 align-items-center">
+                <div class="col-2">
+                    <label class="mb-0" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                </div>
+                <div class="col-4">
+                    {{ field }}
+                </div>
+                <div class="col-6">
+                    {% for error in field.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row mt-3">
+                <div class="col-6">
+                    <input class="btn btn-block btn-primary" type="submit" value="Добавить">
+                    <a href="{% url 'main:equipment-delete' equip.id %}" class="btn btn-block btn-danger">Удалить</i></a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
