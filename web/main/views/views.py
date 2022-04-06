@@ -28,3 +28,11 @@ def rack(request, autozal_slug, rack_number):
         'rack': rack
     }
     return render(request, 'main/rack.html', data)
+
+# порты на оборудовании
+def equipment(request, autozal_slug, rack_number):
+    rack = Rack.objects.get(number=rack_number)
+    data = {
+        'rack': rack
+    }
+    return render(request, 'main/rack.html', data)

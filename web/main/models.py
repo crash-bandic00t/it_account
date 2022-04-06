@@ -45,10 +45,11 @@ class Equipment(models.Model):
         db_table = 'equipment'
         verbose_name = 'Оборудование'
         verbose_name_plural = 'Оборудование'
+        unique_together = ['rack', 'place']
 
     equipment_type = models.CharField('Тип оборудования', max_length=100, choices=EQUPMENT_TYPES, blank=True)
     rack = models.ForeignKey(Rack, verbose_name='Стойка', related_name='equipment', on_delete=models.CASCADE)
-    place = models.CharField('Место', max_length=5, unique=True)
+    place = models.CharField('Место', max_length=5)
     name = models.CharField('Наименование', max_length=100)
     owner = models.CharField('Владелец', max_length=50)
     desc = models.CharField('Описание', max_length=500, blank=True)

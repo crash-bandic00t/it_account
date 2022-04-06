@@ -25,22 +25,24 @@
                 </tr>
             </thead>
             <tbody>
-                {% for equip in rack.equipment.all %}
+                {% for equip in rack.equipment.all|dictsort:"place" %}
                 <tr>
                     <th scope="row" class="text-center">{{ equip.place }}</th>
                     <td>{{ equip.name }}</td>
                     <td>{{ equip.owner }}</td>
                     <td>{{ equip.desc }}</td>
                     <td class="text-center">
-                        <a href="{% url 'main:equipment-update' equip.id %}" class="btn-sm btn-circle btn-warning"><i class="fas fa-pen"></i></a>
-                        <a href="equipment.html" class="btn-sm btn-circle btn-primary"><i class="fas fa-info"></i></a>
+                        <a href="{% url 'main:equipment-update' equip.id %}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}" class="btn-sm btn-circle btn-warning">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                        <a href="{% url 'equipment-detail' %}" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
             
         </table>
-        <a href="{% url 'main:equipment-add'%}" class="btn btn-primary text-right">Добавить <i class="fas fa-plus ml-2"></i></a>
+        <a href="{% url 'main:equipment-add'%}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}" class="btn btn-primary text-right">Добавить <i class="fas fa-plus ml-2"></i></a>
     </div>
     <div class="tab-pane fade mt-3" id="photo" role="tabpanel" aria-labelledby="photo-tab">
         Фото
