@@ -2,8 +2,7 @@ from django.shortcuts import redirect, render
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
-from ..models import Autozal, Rack, Equipment
-from ..forms import EquipmentForm
+from ..models import Autozal, Port, Rack, Equipment
 
 #главная страница
 def index(request):
@@ -30,9 +29,11 @@ def rack(request, autozal_slug, rack_number):
     return render(request, 'main/rack.html', data)
 
 # порты на оборудовании
-def equipment(request, autozal_slug, rack_number):
+def equipment(request, autozal_slug, rack_number, place):
     rack = Rack.objects.get(number=rack_number)
+    equipment = Equipment.objects.get(place=place, rack=rack)
     data = {
-        'rack': rack
+        'rack': rack,
+        'equipment': equipment,
     }
-    return render(request, 'main/rack.html', data)
+    return render(request, 'main/equipment/equipment-detail.html', data)

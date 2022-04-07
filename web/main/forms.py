@@ -9,7 +9,7 @@ from .models import Equipment
 class EquipmentForm(forms.ModelForm):
     class Meta:
         model = Equipment
-        fields = ['rack', 'place', 'equipment_type', 'name', 'owner', 'desc', 'port_cnt']
+        fields = ['rack', 'place', 'type', 'name', 'owner', 'desc', 'port_cnt']
         error_messages = {
             # 'place': {
             #     'unique': 'На этом месте уже есть оборудование!',
@@ -26,16 +26,21 @@ class EquipmentForm(forms.ModelForm):
         # каждому полю формы прописываем класс 'form-control'
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+
+    # проверка места оборудования, чтобы 1 буква была из списка
     def clean_place(self):
         place = self.cleaned_data['place'].upper()
         if place[0] not in ['A', 'S', 'M', 'F']:
             raise ValidationError('Укажите корректное место!')
         return place
 
+
+# наследуемся от предыдущего класса чтобы не переписывать проверки и инит
+# отдельная форма для того, чтобы нельзя было поменять port_cnt
 class EquipmentUpdateForm(EquipmentForm):
     class Meta:
         model = Equipment
-        fields = ['rack', 'place', 'equipment_type', 'name', 'owner', 'desc']
+        fields = ['rack', 'place', 'type', 'name', 'owner', 'desc']
         error_messages = {
             'place': {
                 'unique': 'На этом месте уже есть оборудование!',

@@ -1,6 +1,56 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h1 class="h3 mb-3 text-gray-800">Оборудование</h1>
-
+<h1 class="h3 mb-2 text-gray-800">Оборудование {{ equipment }} </h1>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="equip-tab" data-toggle="tab" href="#equip" role="tab" aria-controls="equip" aria-selected="true">Оборудование</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="false">Описание</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade mt-3 show active" id="equip" role="tabpanel" aria-labelledby="equip-tab">
+        <table class="table table-responsive table-striped mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="col-1 text-center">Interface</th>
+                    <th scope="col" class="text-center">Type</th>
+                    <th scope="col">Vlan</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">CommID</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for port in equipment.ports.all %}
+                <tr class="">
+                    {% if port.active %}
+                    <th scope="row" class="text-center table-success">{{ port.num }}</th>
+                    {% else %}
+                    <th scope="row" class="text-center table-danger">{{ port.num }}</th>
+                    {% endif %}
+                    <td class="text-center">{{ port.type }}</td>
+                    <td>{{ port.vlan }}</td>
+                    <td>{{ port.dest }}</td>
+                    <td>{{ port.desc }}</td>
+                    <td>{{ port.commId }}</td>
+                    <td class="text-center">
+                        <a href="#" class="btn-sm btn-circle btn-warning">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                        <a href="#" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+    <div class="tab-pane fade mt-3" id="desc" role="tabpanel" aria-labelledby="desc-tab">
+        Описание
+    </div>
+</div>
 {% endblock content %}

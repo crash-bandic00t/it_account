@@ -8,9 +8,9 @@ class Autozal(models.Model):
         db_table = 'cas'
         verbose_name = 'Автозал'
         verbose_name_plural = 'Автозалы'
-    name = models.CharField(verbose_name='Наименование', max_length=10)
+    name = models.CharField('Наименование', max_length=10)
     floor = models.PositiveIntegerField(verbose_name='Этаж', blank=True)
-    desc = models.TextField(verbose_name='Описание', max_length=500, blank=True)
+    desc = models.TextField('Описание', max_length=500, blank=True)
     slug = models.SlugField(blank=True, unique=True)
 
     # превращаем имя автозала в slug
@@ -28,8 +28,8 @@ class Rack(models.Model):
         verbose_name = 'Стойка'
         verbose_name_plural = 'Стойки'
     autozal = models.ForeignKey(Autozal, verbose_name='Автозал', related_name='racks', on_delete=models.CASCADE)
-    number = models.PositiveIntegerField(verbose_name='Номер', unique=True)
-    desc = models.TextField(verbose_name='Описание', max_length=500, blank=True, default='-')
+    number = models.PositiveIntegerField('Номер', unique=True)
+    desc = models.TextField('Описание', max_length=500, blank=True, default='-')
 
     def __str__(self):
         return (f'ТШ {self.number}')
@@ -47,7 +47,7 @@ class Equipment(models.Model):
         verbose_name_plural = 'Оборудование'
         unique_together = ['rack', 'place']
 
-    equipment_type = models.CharField('Тип оборудования', max_length=100, choices=EQUPMENT_TYPES, blank=True)
+    type = models.CharField('Тип оборудования', max_length=100, choices=EQUPMENT_TYPES, blank=True)
     rack = models.ForeignKey(Rack, verbose_name='Стойка', related_name='equipment', on_delete=models.CASCADE)
     place = models.CharField('Место', max_length=5)
     name = models.CharField('Наименование', max_length=100)
@@ -55,16 +55,25 @@ class Equipment(models.Model):
     desc = models.CharField('Описание', max_length=500, blank=True)
     port_cnt = models.PositiveIntegerField('Количество портов')
     def __str__(self):
-        return (f'{self.place} {self.name}')
+        return (f'{self.rack.number}-{self.place} {self.name}')
 
 
 class Port(models.Model):
+    PORT_TYPES = (
+        ('', 'Выберите тип...'),
+        ('access', 'Access'),
+        ('trunk', 'Trunk'),
+    )
+
     equipment = models.ForeignKey(Equipment, verbose_name='Оборудование', related_name='ports', on_delete=models.CASCADE)
+    type = models.CharField('Тип порта', max_length=6, choices=PORT_TYPES, default='access')
+    vlan = models.CharField('Vlan', max_length=100, default=999)
     num = models.PositiveIntegerField('№ порта')
     desc = models.CharField('Описание', max_length=200)
     dest = models.CharField('Направление', max_length=50)
     commId = models.CharField('ID коммутации', max_length=50)
     busy = models.BooleanField('Порт занят', default=False)
+    active = models.BooleanField('Порт включен', default=False)
 
     class Meta:
         db_table = 'port'

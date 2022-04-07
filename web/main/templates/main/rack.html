@@ -3,7 +3,6 @@
 {% block content %}
 <h1 class="h3 mb-2 text-gray-800">ТШ {{ rack.number }}</h1>
 
-<!-- DataTales Example -->
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <a class="nav-link active" id="equip-tab" data-toggle="tab" href="#equip" role="tab" aria-controls="equip" aria-selected="true">Оборудование</a>
@@ -35,7 +34,7 @@
                         <a href="{% url 'main:equipment-update' equip.id %}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}" class="btn-sm btn-circle btn-warning">
                             <i class="fas fa-pen"></i>
                         </a>
-                        <a href="{% url 'equipment-detail' %}" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
+                        <a href="{% url 'main:equipment-detail' equip.rack.autozal.slug equip.rack.number equip.place %}" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
                     </td>
                 </tr>
                 {% endfor %}
