@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h1 class="h3 mb-2 text-gray-800">Оборудование {{ equipment }} </h1>
+<h1 class="h3 mb-2 text-gray-800">Оборудование {{ rack.number }}-{{ equipment }} </h1>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <a class="nav-link active" id="equip-tab" data-toggle="tab" href="#equip" role="tab" aria-controls="equip" aria-selected="true">Оборудование</a>
@@ -38,10 +38,9 @@
                     <td>{{ port.desc }}</td>
                     <td>{{ port.commId }}</td>
                     <td class="text-center">
-                        <a href="#" class="btn-sm btn-circle btn-warning">
+                        <a href="{% url 'main:port-update' port.id %}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}&place={{ equipment.place }}" class="btn-sm btn-circle btn-warning">
                             <i class="fas fa-pen"></i>
                         </a>
-                        <a href="#" class="btn-sm btn-circle btn-primary"><i class="fas fa-arrow-right"></i></a>
                     </td>
                 </tr>
                 {% endfor %}

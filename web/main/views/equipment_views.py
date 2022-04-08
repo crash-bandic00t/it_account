@@ -1,4 +1,3 @@
-from mimetypes import init
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 

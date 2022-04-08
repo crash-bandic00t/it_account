@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.exceptions import NON_FIELD_ERRORS
 
 from django import forms
-from .models import Equipment
+from .models import Equipment, Port
 
 # форма добавления редактирования оборудования
 class EquipmentForm(forms.ModelForm):
@@ -49,3 +49,18 @@ class EquipmentUpdateForm(EquipmentForm):
                 'unique_together': "Оборудование на таком месте уже существует!",
             }
         }
+
+
+class PortUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Port
+        fields = ['type', 'vlan', 'desc', 'active']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # каждому полю формы прописываем класс 'form-control'
+        for field_name, field in self.fields.items():
+            if field_name == 'active':
+                pass
+            else:
+                field.widget.attrs['class'] = 'form-control'

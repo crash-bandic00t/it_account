@@ -55,7 +55,7 @@ class Equipment(models.Model):
     desc = models.CharField('Описание', max_length=500, blank=True)
     port_cnt = models.PositiveIntegerField('Количество портов')
     def __str__(self):
-        return (f'{self.rack.number}-{self.place} {self.name}')
+        return (f'{self.place} {self.name}')
 
 
 class Port(models.Model):
@@ -70,7 +70,7 @@ class Port(models.Model):
     vlan = models.CharField('Vlan', max_length=100, default=999)
     num = models.PositiveIntegerField('№ порта')
     desc = models.CharField('Описание', max_length=200)
-    dest = models.CharField('Направление', max_length=50)
+    dest = models.CharField('Куда', max_length=50)
     commId = models.CharField('ID коммутации', max_length=50)
     busy = models.BooleanField('Порт занят', default=False)
     active = models.BooleanField('Порт включен', default=False)
@@ -90,6 +90,7 @@ class Commutation(models.Model):
         verbose_name = 'Коммутация'
         verbose_name_plural = 'Коммутации'
 
+    
     desc = models.CharField('Описание', max_length=100)
     from_rack = models.ForeignKey(
         Rack, verbose_name='Стойка откуда',
@@ -133,6 +134,8 @@ class Commutation(models.Model):
         blank=True
         )
     full_path = models.CharField('Полный путь', max_length=100, default='-')
+    created = models.DateTimeField(verbose_name='создан', auto_now_add=True)
+    updated = models.DateTimeField(verbose_name='обновлен', auto_now=True)
 
     def __str__(self):
         return self.desc
