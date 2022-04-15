@@ -12,7 +12,4 @@ def create_ports(sender, instance, created, **kwargs):
             Port.objects.create(
                 equipment=instance,
                 num=i+1,
-                desc='Free',
-                dest='-',
-                commId='-'
             )

@@ -20,7 +20,6 @@
                     <th scope="col">Vlan</th>
                     <th scope="col">Destination</th>
                     <th scope="col">Description</th>
-                    <th scope="col">CommID</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -36,7 +35,6 @@
                     <td>{{ port.vlan }}</td>
                     <td>{{ port.dest }}</td>
                     <td>{{ port.desc }}</td>
-                    <td>{{ port.commId }}</td>
                     <td class="text-center">
                         <a href="{% url 'main:port-update' port.id %}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}&place={{ equipment.place }}" class="btn-sm btn-circle btn-warning">
                             <i class="fas fa-pen"></i>

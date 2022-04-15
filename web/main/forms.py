@@ -1,9 +1,10 @@
+from email.policy import default
 from urllib import request
 from django.core.exceptions import ValidationError
 from django.core.exceptions import NON_FIELD_ERRORS
 
 from django import forms
-from .models import Equipment, Port
+from .models import Commutation, Equipment, Port, Rack
 
 # форма добавления редактирования оборудования
 class EquipmentForm(forms.ModelForm):
@@ -54,13 +55,95 @@ class EquipmentUpdateForm(EquipmentForm):
 class PortUpdateForm(forms.ModelForm):
     class Meta:
         model = Port
-        fields = ['type', 'vlan', 'desc', 'active']
-    
+        fields = ['category', 'type', 'vlan', 'active', 'dest', 'full_path', 'desc']
+        widgets = {
+            'dest': forms.TextInput(attrs={
+                'disabled': '',
+                'aria-label': 'destination',
+                'aria-describedby': 'change_dest'
+                })
+        }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['category'].empty_label = 'Выберите категорию...'
         # каждому полю формы прописываем класс 'form-control'
         for field_name, field in self.fields.items():
             if field_name == 'active':
                 pass
             else:
                 field.widget.attrs['class'] = 'form-control'
+
+# class CommutationUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = Commutation
+#         fields = '__all__'
+#         widgets = {
+#             'dest_port': forms.TextInput(attrs={
+#                 'disabled': '',
+#                 'aria-label': 'destination',
+#                 'aria-describedby': 'change_dest'
+#                 })
+#         }
+    
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         # каждому полю формы прописываем класс 'form-control'
+#         for field_name, field in self.fields.items():
+#             field.widget.attrs['class'] = 'form-control'
+
+    
+class DestinationPortUpdateForm(forms.Form):
+    rack = forms.ModelChoiceField(queryset=Rack.objects.all(), label='Стойка откуда', initial='R', required=False, empty_label='Выберите стойку...',   widget=forms.Select(attrs={'class':'form-control'}))
+    equip = forms.ModelChoiceField(queryset=Equipment.objects.all(), label='Оборудование откуда', required=False, empty_label='Выберите оборудование...', widget=forms.Select(attrs={'class':'form-control'}))
+    port = forms.ModelChoiceField(queryset=Port.objects.all(), label='Порт откуда', required=False, empty_label='Выберите порт...', widget=forms.Select(attrs={'class':'form-control'}))
+    
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['equip'].queryset = Equipment.objects.none()
+        self.fields['port'].queryset = Port.objects.none()
+        # проверяем что в запросе есть equip, если есть, то выставляем queryset на фильтрованый,
+        # чтобы не было ошибки заполнения поля. Так же делаем с port
+        if self.data.get('equip'):
+            equip_id = int(self.data.get('equip'))
+            self.fields['equip'].queryset = Equipment.objects.filter(id=equip_id)
+        if self.data.get('port'):
+            port_id = int(self.data.get('port'))
+            self.fields['port'].queryset = Port.objects.filter(id=port_id)
+         
+
+    def clean_port(self):
+        port = self.cleaned_data['port']
+        if port:
+            if port.busy:
+                raise ValidationError('Данный порт уже занят!')
+        return port
+
+
+# class PortUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = Port
+#         fields = ['category', 'type', 'vlan', 'dest', 'desc', 'active']
+#         widgets = {
+#             'dest': forms.TextInput(attrs={'list': 'port-list', 'autocomplete': 'off'})
+#         }
+    
+#     def clean_dest(self):
+#         print(self.cleaned_data)        
+#         dest = self.cleaned_data['dest']
+#         if dest:
+#             print(dest)
+#             return dest
+#         else:
+#             raise ValidationError('Не корректное назначение!')
+
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['category'].empty_label = 'Выберите категорию...'
+#         # каждому полю формы прописываем класс 'form-control'
+#         for field_name, field in self.fields.items():
+#             if field_name == 'active':
+#                 pass
+#             else:
+#                 field.widget.attrs['class'] = 'form-control'

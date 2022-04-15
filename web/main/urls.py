@@ -13,6 +13,9 @@ urlpatterns = [
     path('edit/equipment-add/', equipment_views.EquipmentAddView.as_view(), name='equipment-add'),
     path('edit/equipment-update/<int:pk>/', equipment_views.EquipmentUpdateView.as_view(), name='equipment-update'),
     path('edit/equipment-delete/<int:pk>/', equipment_views.EquipmentDeleteView.as_view(), name='equipment-delete'),
-    path('edit/port-update/<int:pk>', port_views.PortUpdateView.as_view(), name='port-update'),
+    path('edit/port-update/<int:pk>', port_views.port_update, name='port-update'),
 
+    path('ajax/port-dest/equip', port_views.get_equip_dropdown, name='port-dest-equip'),
+    path('ajax/port-dest/ports', port_views.get_port_dropdown, name='port-dest-ports'),
+    # path('ajax/port-dest-update', port_views.port_dest_update, name='port-dest-update'),
 ]

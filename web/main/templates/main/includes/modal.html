@@ -1,0 +1,32 @@
+<div class="col-4 pr-0">
+    <div class="input-group">
+        {{ field }}
+        <div class="input-group-append">
+            <button id="change_dest" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                Изменить
+            </button>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{% url 'main:port-dest-update' %}" method="POST" id="formPortDest">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Введите куда идет порт</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {{ form_port_dest.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+                    <button id="port_dest_submit" type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
