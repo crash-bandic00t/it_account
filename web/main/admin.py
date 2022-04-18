@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from .models import Autozal,Equipment,Rack,Port,Commutation,Category
+from .models import Autozal,Equipment,Rack,Port,Category
 # Register your models here.
 
 
 admin.site.register(Rack)
 admin.site.register(Equipment)
-admin.site.register(Commutation)
 
 @admin.register(Autozal)
 class AutozalAdmin(ModelAdmin):

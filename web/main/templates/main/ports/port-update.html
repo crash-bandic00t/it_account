@@ -47,9 +47,28 @@
             <div class="row mt-3">
                 <div class="col-6 pr-0">
                     <input class="btn btn-block btn-primary" type="submit" value="Сохранить">
+                    <button type="button" class="btn btn-block btn-warning" data-toggle="modal" data-target="#exampleModal">
+                        Очистить коммутацию
+                    </button>
                 </div>
             </div>
         </form>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Действительно хотите очистить коммутацию?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+                <a href="{% url 'main:port-clear' %}?source_port_id={{ source_port.id }}&dest_port_id={{ source_port.dest_port_id }}" class="btn btn-primary">Очистить</a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}

@@ -76,35 +76,6 @@ class Category(models.Model):
         return (f'{self.name}')
 
 
-class Commutation(models.Model):
-    class Meta:
-        db_table = 'commutation'
-        verbose_name = 'Коммутация'
-        verbose_name_plural = 'Коммутации'
-
-    source_port = models.CharField('Откуда', max_length=10, default='-')
-    dest_port = models.CharField('Куда', max_length=10, default='-', blank=True)
-    # source_port = models.ForeignKey(
-    #     Port,
-    #     verbose_name='Откуда',
-    #     on_delete=models.CASCADE,
-    #     related_name='source_port',
-    #     null=True
-    #     )
-    # dest_port = models.ForeignKey(
-    #     Port,
-    #     verbose_name='Куда',
-    #     on_delete=models.CASCADE,
-    #     related_name='destination_port',
-    #     null=True
-    #     )
-    
-    created = models.DateTimeField(verbose_name='создан', auto_now_add=True)
-    updated = models.DateTimeField(verbose_name='обновлен', auto_now=True)
-
-    def __str__(self):
-        return f'{self.source_port} ---> {self.dest_port}'
-
 
 class Port(models.Model):
     category = models.ForeignKey(Category, verbose_name='Категория', related_name='ports', on_delete=models.CASCADE, null=True, blank=True)
@@ -116,7 +87,7 @@ class Port(models.Model):
     active = models.BooleanField('Порт включен', default=False)
     dest = models.CharField('Куда', max_length=100, blank=True)
     dest_port_id = models.PositiveIntegerField('ID порта назначения', blank=True, null=True)
-    full_path = models.CharField('Полный путь', max_length=100, default='-')
+    full_path = models.CharField('Полный путь', max_length=100, default='-', blank=True)
     desc = models.CharField('Описание', max_length=100, default='-')
 
     class Meta:
@@ -126,63 +97,3 @@ class Port(models.Model):
     
     def __str__(self):
         return (f'{self.equipment.rack.number}-{self.equipment.place}-{self.num}')
-
-
-
-
-
-# class Commutation(models.Model):
-#     class Meta:
-#         db_table = 'commutation'
-#         verbose_name = 'Коммутация'
-#         verbose_name_plural = 'Коммутации'
-
-#     source_rack = models.ForeignKey(
-#         Rack,
-#         verbose_name='Стойка откуда ',
-#         on_delete=models.CASCADE,
-#         related_name='source_rack',
-#         null=True
-#         )
-#     source_equip = models.ForeignKey(
-#         Equipment,
-#         verbose_name='Оборудование откуда ',
-#         on_delete=models.CASCADE,
-#         related_name='source_equip',
-#         null=True
-#         )
-#     source_port = models.ForeignKey(
-#         Port,
-#         verbose_name='Порт откуда',
-#         on_delete=models.CASCADE,
-#         related_name='source_port',
-#         null=True
-#         )
-#     dest_rack = models.ForeignKey(
-#         Rack,
-#         verbose_name='Стойка куда',
-#         on_delete=models.CASCADE,
-#         related_name='destination_rack',
-#         null=True
-#         )
-#     dest_equip = models.ForeignKey(
-#         Equipment,
-#         verbose_name='Оборудование куда',
-#         on_delete=models.CASCADE,
-#         related_name='destination_equip',
-#         null=True
-#         )
-#     dest_port = models.ForeignKey(
-#         Port,
-#         verbose_name='Порт куда',
-#         on_delete=models.CASCADE,
-#         related_name='destination_port',
-#         null=True
-#         )
-#     full_path = models.CharField('Полный путь', max_length=100, default='-')
-#     desc = models.CharField('Описание', max_length=100)
-#     created = models.DateTimeField(verbose_name='создан', auto_now_add=True)
-#     updated = models.DateTimeField(verbose_name='обновлен', auto_now=True)
-
-#     def __str__(self):
-#         return self.desc

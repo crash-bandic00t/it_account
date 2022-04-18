@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
-from ..models import Autozal, Commutation, Port, Rack, Equipment
+from ..models import Autozal, Port, Rack, Equipment
 
 #главная страница
 def index(request):
@@ -37,11 +37,3 @@ def equipment(request, autozal_slug, rack_number, place):
         'equipment': equipment,
     }
     return render(request, 'main/equipment/equipment-detail.html', data)
-
-# все коммутации
-def commutation(request):
-    comm = Commutation.objects.all()
-    data = {
-        'commutations': comm
-    }
-    return render(request, 'main/commutation.html', data)

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.exceptions import NON_FIELD_ERRORS
 
 from django import forms
-from .models import Commutation, Equipment, Port, Rack
+from .models import Equipment, Port, Rack
 
 # форма добавления редактирования оборудования
 class EquipmentForm(forms.ModelForm):
@@ -58,7 +58,7 @@ class PortUpdateForm(forms.ModelForm):
         fields = ['category', 'type', 'vlan', 'active', 'dest', 'full_path', 'desc']
         widgets = {
             'dest': forms.TextInput(attrs={
-                'disabled': '',
+                'readonly': '',
                 'aria-label': 'destination',
                 'aria-describedby': 'change_dest'
                 })
@@ -73,24 +73,7 @@ class PortUpdateForm(forms.ModelForm):
                 pass
             else:
                 field.widget.attrs['class'] = 'form-control'
-
-# class CommutationUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Commutation
-#         fields = '__all__'
-#         widgets = {
-#             'dest_port': forms.TextInput(attrs={
-#                 'disabled': '',
-#                 'aria-label': 'destination',
-#                 'aria-describedby': 'change_dest'
-#                 })
-#         }
     
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         # каждому полю формы прописываем класс 'form-control'
-#         for field_name, field in self.fields.items():
-#             field.widget.attrs['class'] = 'form-control'
 
     
 class DestinationPortUpdateForm(forms.Form):
@@ -119,31 +102,3 @@ class DestinationPortUpdateForm(forms.Form):
             if port.busy:
                 raise ValidationError('Данный порт уже занят!')
         return port
-
-
-# class PortUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Port
-#         fields = ['category', 'type', 'vlan', 'dest', 'desc', 'active']
-#         widgets = {
-#             'dest': forms.TextInput(attrs={'list': 'port-list', 'autocomplete': 'off'})
-#         }
-    
-#     def clean_dest(self):
-#         print(self.cleaned_data)        
-#         dest = self.cleaned_data['dest']
-#         if dest:
-#             print(dest)
-#             return dest
-#         else:
-#             raise ValidationError('Не корректное назначение!')
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.fields['category'].empty_label = 'Выберите категорию...'
-#         # каждому полю формы прописываем класс 'form-control'
-#         for field_name, field in self.fields.items():
-#             if field_name == 'active':
-#                 pass
-#             else:
-#                 field.widget.attrs['class'] = 'form-control'
