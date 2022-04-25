@@ -1,5 +1,5 @@
 #admin bootstrap template
-admin_bootstrap_template/vendor
+admin_bootstrap_template/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
