@@ -70,6 +70,20 @@
                 </div>
             </li>
             {% endfor %}
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Vlan's
+            </div>
+            <!-- перебор всех автозалов со стойками -->
+            {% for item in complexes %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:vlan' item.slug %}">
+                    <i class="fas fa-network-wired"></i>
+                    <span>{{ item.name }}</span>
+                </a>
+            </li>
+            {% endfor %}
             <hr class="sidebar-divider d-none d-md-block">
 
             <div class="text-center d-none d-md-inline">

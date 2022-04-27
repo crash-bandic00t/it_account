@@ -1,20 +1,16 @@
-from email.policy import default
-from urllib import request
 from django.core.exceptions import ValidationError
 from django.core.exceptions import NON_FIELD_ERRORS
 
 from django import forms
-from .models import Equipment, Port, Rack
+from ..models import Equipment, Port, Rack
 
 # форма добавления редактирования оборудования
 class EquipmentForm(forms.ModelForm):
     class Meta:
         model = Equipment
         fields = ['rack', 'place', 'type', 'name', 'owner', 'desc', 'port_cnt']
+        # замена стандартного сообщения об ошибке unique_together
         error_messages = {
-            # 'place': {
-            #     'unique': 'На этом месте уже есть оборудование!',
-            # },
             NON_FIELD_ERRORS: {
                 'unique_together': "В данном шкафу это место занято!",
             }
@@ -55,7 +51,9 @@ class EquipmentUpdateForm(EquipmentForm):
 class PortUpdateForm(forms.ModelForm):
     class Meta:
         model = Port
-        fields = ['category', 'type', 'vlan', 'active', 'dest', 'full_path', 'desc']
+        fields = ['type', 'vlan', 'active', 'dest', 'full_path', 'desc']
+        # делаем поле назначения не редактируемым, чтобы пользователь воспользовался
+        # зависимыми dropdown для правильного выбора порта назначения
         widgets = {
             'dest': forms.TextInput(attrs={
                 'readonly': '',
@@ -66,7 +64,6 @@ class PortUpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['category'].empty_label = 'Выберите категорию...'
         # каждому полю формы прописываем класс 'form-control'
         for field_name, field in self.fields.items():
             if field_name == 'active':
@@ -75,7 +72,7 @@ class PortUpdateForm(forms.ModelForm):
                 field.widget.attrs['class'] = 'form-control'
     
 
-    
+# форма зависимых полей для выбора нужного порта    
 class DestinationPortUpdateForm(forms.Form):
     rack = forms.ModelChoiceField(queryset=Rack.objects.all(), label='Стойка откуда', initial='R', required=False, empty_label='Выберите стойку...',   widget=forms.Select(attrs={'class':'form-control'}))
     equip = forms.ModelChoiceField(queryset=Equipment.objects.all(), label='Оборудование откуда', required=False, empty_label='Выберите оборудование...', widget=forms.Select(attrs={'class':'form-control'}))

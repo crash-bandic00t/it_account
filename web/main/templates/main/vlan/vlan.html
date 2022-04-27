@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">{{ complex.name }}</h1>
+<a href="{% url 'main:vlan-add' %}?complex_slug={{ complex.slug }}" class="btn btn-primary text-right">Добавить<i class="fas fa-plus ml-2"></i></a>
+<table class="table table-sm table-striped table-bordered table-responsive mt-3">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col" class="text-center" style="width: 80px;">Vlan</th>
+        <th scope="col" class="text-center">Name</th>
+        <th scope="col" class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for vlan in complex.vlan.all|dictsort:"vlan_id" %}
+        <tr>
+            <th scope="row" class="text-center align-middle">{{ vlan.vlan_id }}</th>
+            <td style="min-width: 250px;">
+                {{ vlan.name }}
+            </td>
+            <td class="text-center" style="min-width: 70px;">
+                <a href="{% url 'main:vlan-update' vlan.id %}?complex_slug={{ complex.slug }}" class="btn-sm btn-circle btn-warning">
+                    <i class="fas fa-pen"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

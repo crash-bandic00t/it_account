@@ -4,6 +4,38 @@ from django.db import models
 from pytils.translit import slugify
 
 
+class Complex(models.Model):
+    name = models.CharField('Наименование комплекса', max_length=50)
+    slug = models.SlugField(blank=True, unique=True)
+
+    class Meta:
+        db_table = 'complex'
+        verbose_name = 'Комплекс'
+        verbose_name_plural = 'Комплексы'
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return (f'{self.name}')
+
+
+class Vlan(models.Model):
+    
+    class Meta:
+        db_table = 'vlan'
+        verbose_name = 'Vlan'
+        verbose_name_plural = 'Vlans'
+        unique_together = ['vlan_id', 'complex']
+
+    vlan_id = models.PositiveIntegerField(verbose_name='Номер vlan')
+    name = models.CharField('Наименование vlan', max_length=100)
+    complex = models.ForeignKey(Complex, verbose_name='Комплекс', related_name='vlan', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return (f'Vlan {self.vlan_id} {self.complex}')
+
 class Autozal(models.Model):
     class Meta:
         db_table = 'cas'
@@ -48,6 +80,7 @@ class Equipment(models.Model):
         verbose_name_plural = 'Оборудование'
         unique_together = ['rack', 'place']
 
+    complex = models.ForeignKey(Complex, verbose_name='Комплекс', related_name='equipment', on_delete=models.CASCADE, null=True)
     type = models.CharField('Тип оборудования', max_length=100, choices=EQUPMENT_TYPES, blank=True)
     rack = models.ForeignKey(Rack, verbose_name='Стойка', related_name='equipment', on_delete=models.CASCADE)
     place = models.CharField('Место', max_length=5)
@@ -55,30 +88,12 @@ class Equipment(models.Model):
     owner = models.CharField('Владелец', max_length=50)
     desc = models.CharField('Описание', max_length=500, blank=True)
     port_cnt = models.PositiveIntegerField('Количество портов')
+
     def __str__(self):
         return (f'{self.place} {self.name}')
 
 
-class Category(models.Model):
-    name = models.CharField('Наименование', max_length=50)
-    slug = models.SlugField(blank=True, unique=True)
-
-    class Meta:
-        db_table = 'category'
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        return super().save(*args, **kwargs)
-
-    def __str__(self):
-        return (f'{self.name}')
-
-
-
 class Port(models.Model):
-    category = models.ForeignKey(Category, verbose_name='Категория', related_name='ports', on_delete=models.CASCADE, null=True, blank=True)
     equipment = models.ForeignKey(Equipment, verbose_name='Оборудование', related_name='ports', on_delete=models.CASCADE)
     type = models.CharField('Тип порта', max_length=6, default='access')
     vlan = models.CharField('Vlan', max_length=100, default=999)
@@ -97,3 +112,10 @@ class Port(models.Model):
     
     def __str__(self):
         return (f'{self.equipment.rack.number}-{self.equipment.place}-{self.num}')
+
+
+class VlanToPort(models.Model):
+    class Meta:
+        db_table = 'vlan-to-port'
+        verbose_name = 'Vlan на порту'
+
