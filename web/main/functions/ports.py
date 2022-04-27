@@ -1,4 +1,4 @@
-from ..models import Equipment, Port, Rack
+from ..models import Port
 
 def ports_update(data, source_port):
     # если передается новый порт назначения

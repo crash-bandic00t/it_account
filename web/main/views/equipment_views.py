@@ -2,7 +2,7 @@ from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
 from ..models import Equipment, Rack
-from ..forms import EquipmentForm, EquipmentUpdateForm
+from ..forms.equip_forms import EquipmentForm, EquipmentUpdateForm
 
 # добавление оборудования
 class EquipmentAddView(CreateView):
@@ -26,6 +26,8 @@ class EquipmentAddView(CreateView):
                 ]
             )
 
+
+# редактирование оборудования
 class EquipmentUpdateView(UpdateView):
     model = Equipment
     template_name = 'main/equipment/equipment-update.html'
@@ -43,6 +45,7 @@ class EquipmentUpdateView(UpdateView):
             )
 
 
+# удаление оборудования
 class EquipmentDeleteView(DeleteView):
     model = Equipment
     template_name = 'main/equipment/equipment-delete.html'
