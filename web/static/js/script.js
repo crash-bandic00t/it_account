@@ -1,4 +1,4 @@
-
+$('#id_vlan').multiSelect();
 // Чтобы после POST не подставлялись предыдущие значения
 $('#id_rack option:first').prop('selected', true);
 $('#id_equip').html('<option value="">Выберите оборудование...</option>');

@@ -1,5 +1,6 @@
 from email.policy import default
 from django.db import models
+from pkg_resources import require
 
 from pytils.translit import slugify
 
@@ -34,7 +35,7 @@ class Vlan(models.Model):
     complex = models.ForeignKey(Complex, verbose_name='Комплекс', related_name='vlan', on_delete=models.CASCADE)
 
     def __str__(self):
-        return (f'Vlan {self.vlan_id} {self.complex}')
+        return (f'Vlan {self.vlan_id}')
 
 class Autozal(models.Model):
     class Meta:
@@ -94,9 +95,15 @@ class Equipment(models.Model):
 
 
 class Port(models.Model):
+    PORT_TYPES = (
+            ('', 'Выберите тип...'),
+            ('access','Access'),
+            ('trunk', 'Trunk'),
+        )
+
     equipment = models.ForeignKey(Equipment, verbose_name='Оборудование', related_name='ports', on_delete=models.CASCADE)
-    type = models.CharField('Тип порта', max_length=6, default='access')
-    vlan = models.CharField('Vlan', max_length=100, default=999)
+    type = models.CharField('Тип порта', max_length=6, choices=PORT_TYPES, default='access')
+    vlan = models.ManyToManyField(Vlan, blank=True)
     num = models.PositiveIntegerField('№ порта')
     busy = models.BooleanField('Порт занят', default=False)
     active = models.BooleanField('Порт включен', default=False)

@@ -1,16 +1,17 @@
 from django.shortcuts import redirect, render
 
-from ..models import Equipment, Port, Rack
-from ..forms.equip_forms import PortUpdateForm, DestinationPortUpdateForm
+from ..models import Equipment, Port
+from ..forms.port_forms import PortUpdateForm, DestinationPortUpdateForm
 from ..functions.ports import ports_update
 
 
 def port_update(request, pk):
     source_port = Port.objects.get(id=pk)
-    source_port_form = PortUpdateForm(instance=source_port)
+    complex_id = source_port.equipment.complex.id
+    source_port_form = PortUpdateForm(instance=source_port, complex_id=complex_id)
     dest_port_form = DestinationPortUpdateForm()
     if request.method == 'POST':
-        source_port_form = PortUpdateForm(request.POST, instance=source_port)
+        source_port_form = PortUpdateForm(request.POST, instance=source_port, complex_id=complex_id)
         dest_port_form = DestinationPortUpdateForm(request.POST)
         if source_port_form.is_valid() and dest_port_form.is_valid():
             ports_update(request.POST, source_port)

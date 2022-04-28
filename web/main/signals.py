@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from .models import Port, Equipment
+from .models import Port, Equipment, Vlan, Complex
 
 # создает порты при создании нового оборудования
 # обязательно в apps.py указать
@@ -9,7 +9,18 @@ from .models import Port, Equipment
 def create_ports(sender, instance, created, **kwargs):
     if created:
         for i in range(instance.port_cnt):
-            Port.objects.create(
+            obj = Port.objects.create(
                 equipment=instance,
                 num=i+1,
+            )
+            obj.vlan.add(Vlan.objects.get(vlan_id=999, complex=instance.complex))
+
+# создание vlan 999 для каждого комплекса по умолчанию
+@receiver(post_save, sender=Complex)
+def create_vlan_999(sender, instance, created, **kwargs):
+    if created:
+        Vlan.objects.create(
+            complex=instance,
+            vlan_id=999,
+            name='free'
             )

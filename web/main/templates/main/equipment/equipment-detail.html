@@ -33,7 +33,11 @@
                         <th scope="row" class="text-center table-danger">{{ port.num }}</th>
                         {% endif %}
                         <td class="text-center">{{ port.type }}</td>
-                        <td>{{ port.vlan }}</td>
+                        <td>
+                        {% for vlan in port.vlan.all %}
+                            {{ vlan.vlan_id }}
+                        {% endfor %}
+                        </td>
                         <td>{{ port.dest }}</td>
                         <td class="text-center" >{{ port.desc }}</td>
                         <td class="text-center">
