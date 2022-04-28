@@ -34,8 +34,6 @@
                 </div>
                 {% if field.name == 'dest' %}
                 {% include 'main/includes/port-dest.html' %}
-                {% elif field.name == 'vlan' %}
-                {% include 'main/includes/port-vlan.html' %}
                 {% else %}
                 <div class="col-4 pr-0">
                     {{ field }}

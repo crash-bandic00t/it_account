@@ -12,6 +12,7 @@
               </tr>
             </thead>
             <tbody>
+                <!-- перебираем все ТШ в автозале -->
                 {% for rack in autozal.racks.all %}
                 <tr>
                     <th scope="row" class="text-center align-middle">ТШ {{ rack.number }}</th>

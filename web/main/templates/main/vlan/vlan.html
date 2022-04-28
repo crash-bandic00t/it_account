@@ -12,6 +12,7 @@
         </tr>
     </thead>
     <tbody>
+        <!-- перебираем все вланы в комплексе, сортируя по vlan_id -->
         {% for vlan in complex.vlan.all|dictsort:"vlan_id" %}
         <tr>
             <th scope="row" class="text-center align-middle">{{ vlan.vlan_id }}</th>

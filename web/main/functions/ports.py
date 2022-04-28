@@ -1,6 +1,6 @@
-from ..models import Port
+from ..models import Port, Vlan
 
-def ports_update(data, source_port):
+def port_dest_update(data, source_port):
     # если передается новый порт назначения
     if data.get('port'):
         dest_port = Port.objects.get(id=data.get('port'))
@@ -26,3 +26,33 @@ def ports_update(data, source_port):
         # если порт указан не был, и его не было ранее
         except:
             pass
+
+def port_dest_clear(request):
+    # берем порт источник
+    src = Port.objects.get(id=request.GET.get('source_port_id'))
+    # пытаемся взять порт назначения
+    try:
+        dst = Port.objects.get(id=request.GET.get('dest_port_id'))
+    except:
+        dst = None
+    # очищаем порт источник
+    src.busy = False
+    src.dest = ''
+    src.dest_port_id = None
+    src.full_path = ''
+    src.desc = '-'
+    # очищаем список vlan на порту
+    src.vlan.clear()
+    # добявляем дефолтный vlan
+    src.vlan.add(Vlan.objects.get(vlan_id=999, complex=src.equipment.complex))
+    src.save()
+    # если есть порт назначения очищаем и его
+    if dst:
+        dst.busy = False
+        dst.dest = ''
+        dst.dest_port_id = None
+        dst.full_path = ''
+        dst.desc = '-'
+        dst.vlan.clear()
+        dst.vlan.add(Vlan.objects.get(vlan_id=999, complex=src.equipment.complex))
+        dst.save()

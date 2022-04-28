@@ -19,8 +19,10 @@ class PortUpdateForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        # вытаскиваем из квагров id комплекса
         self.complex_id = kwargs.pop('complex_id')
         super().__init__(*args, **kwargs)
+        # фильтруем queryset для отображения vlan только комплекса, к которому принадлежит оборудование
         self.fields['vlan'].queryset = Vlan.objects.filter(complex_id=self.complex_id)
         self.fields['vlan'].widget.attrs['style'] = 'display: none;'
         # каждому полю формы прописываем класс 'form-control'
@@ -42,7 +44,7 @@ class DestinationPortUpdateForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['equip'].queryset = Equipment.objects.none()
         self.fields['port'].queryset = Port.objects.none()
-        # проверяем что в запросе есть equip, если есть, то выставляем queryset на фильтрованый,
+        # проверяем что в запросе есть equip. если есть, то меняем queryset вместо пустого на фильтрованый,
         # чтобы не было ошибки заполнения поля. Так же делаем с port
         if self.data.get('equip'):
             equip_id = int(self.data.get('equip'))

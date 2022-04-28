@@ -13,11 +13,13 @@
 
     <title>Search IT</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- fontawesom для проекта -->
     <link href="{% static 'css/all.min.css' %}" rel="stylesheet" type="text/css">
 
-    <!-- Custom styles for this template-->
+    <!-- bootstrap css -->
     <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+
+    <!-- Добавить свои стили на отдельной странице если это необходимо -->
     {% block css %}
     {% endblock css %}
 
@@ -49,6 +51,7 @@
                     <span>Главная страница</span></a>
             </li>
             <hr class="sidebar-divider">
+
             <!-- Heading -->
             <div class="sidebar-heading">
                 Автозалы
@@ -73,11 +76,12 @@
             </li>
             {% endfor %}
             <hr class="sidebar-divider">
+
             <!-- Heading -->
             <div class="sidebar-heading">
                 Vlan's
             </div>
-            <!-- перебор всех автозалов со стойками -->
+            <!-- перебор всех комплексов для перехода в vlan's -->
             {% for item in complexes %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'main:vlan' item.slug %}">
@@ -280,6 +284,8 @@
                 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
+                    <!-- Основной контент каждой страницы -->
                     {% block content %}
                     {% endblock content %}
                 </div>
