@@ -1,0 +1,26 @@
+<!-- Input группа из bootstrap-->
+<div class="col-4 pr-0">
+    <div class="input-group">
+        {% comment %} <input type="text" readonly="" class="form-control" value="
+            {% for vlan in source_port.vlan.all %}
+                {% if forloop.last %}
+                {{ vlan.vlan_id }}
+                {% else %}
+                {{ vlan.vlan_id }},
+                {% endif %}
+            {% endfor %}
+            "> {% endcomment %}
+            <input type="text" name="dest" value="{% for vlan in source_port.vlan.all %}{% if forloop.last %}{{ vlan.vlan_id }}{% else %}{{ vlan.vlan_id }},{% endif %}{% endfor %}" readonly="" maxlength="100" class="form-control">
+        <div class="input-group-append">
+            <button id="change_dest" type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapseVlan" aria-expanded="false" aria-controls="collapseVlan">
+                Изменить
+            </button>
+        </div>
+    </div>
+    
+    <div class="collapse mt-2" id="collapseVlan">
+        <div class="card card-body">
+            {{ field }}
+        </div>
+      </div>
+</div>

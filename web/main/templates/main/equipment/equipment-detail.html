@@ -14,53 +14,80 @@
 <div class="tab-content" id="myTabContent">
     <!-- Элемент вкладки Оборудование -->
     <div class="tab-pane fade mt-3 show active" id="equip" role="tabpanel" aria-labelledby="equip-tab">
-        <div class="">
-            <table class="table table-responsive table-striped table-sm mt-3">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col" class="text-center">Interface</th>
-                        <th scope="col" class="text-center" style="min-width: 100px">Type</th>
-                        <th scope="col" style="min-width: 70px">Vlan</th>
-                        <th scope="col" class="text-center" style="min-width: 100px">Destination</th>
-                        <th scope="col" class="text-center" style="min-width: 200px">Description</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- перебор всех портов в оборудовании -->
-                    {% for port in equipment.ports.all %}
-                    <tr class="">
-                        <!-- покраска ячейки порта в зависимости от его состояния -->
-                        {% if port.active %}
-                        <th scope="row" class="text-center table-success">{{ port.num }}</th>
+        {% if equipment.type == 'operator' %}
+        <table class="table table-responsive table-bordered table-striped table-sm mt-3 text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Interface</th>
+                    <th scope="col" style="min-width: 100px">Destination</th>
+                    <th scope="col" style="min-width: 200px">Description</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- перебор всех портов в оборудовании -->
+                {% for port in equipment.ports.all %}
+                <tr class="">
+                    <th>{{ port.name }}</th>
+                    <td>{{ port.dest }}</td>
+                    <td class="text-center" >{{ port.desc }}</td>
+                    <td class="text-center">
+                        <!-- GET аргументы для того, чтобы передать в suссess_url нужные параметры -->
+                        <a href="{% url 'main:port-update' port.id %}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}&place={{ equipment.place }}" class="btn-sm btn-warning">
+                            Изменить<!--<i class="fas fa-pen"></i> -->
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <table class="table table-responsive table-bordered table-striped table-sm mt-3 text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Interface</th>
+                    <th scope="col" style="min-width: 100px">Type</th>
+                    <th scope="col" style="min-width: 70px">Vlan</th>
+                    <th scope="col" style="min-width: 100px">Destination</th>
+                    <th scope="col" style="min-width: 200px">Description</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- перебор всех портов в оборудовании -->
+                {% for port in equipment.ports.all %}
+                <tr class="">
+                    <!-- покраска ячейки порта в зависимости от его состояния -->
+                    {% if port.active %}
+                    <th scope="row" class="table-success">{{ port.name }}</th>
+                    {% else %}
+                    <th scope="row" class="table-danger">{{ port.name }}</th>
+                    {% endif %}
+                    <td>{{ port.type }}</td>
+                    <td>
+                    <!-- вывод всех vlan на порту -->
+                    {% for vlan in port.vlan.all %}
+                        <!-- если элемент последний в списке, то запятую в конце не ставим-->
+                        {% if forloop.last %}
+                        {{ vlan.vlan_id }}
                         {% else %}
-                        <th scope="row" class="text-center table-danger">{{ port.num }}</th>
+                        {{ vlan.vlan_id }},
                         {% endif %}
-                        <td class="text-center">{{ port.type }}</td>
-                        <td>
-                        <!-- вывод всех vlan на порту -->
-                        {% for vlan in port.vlan.all %}
-                            <!-- если элемент последний в списке, то запятую в конце не ставим-->
-                            {% if forloop.last %}
-                            {{ vlan.vlan_id }}
-                            {% else %}
-                            {{ vlan.vlan_id }},
-                            {% endif %}
-                        {% endfor %}
-                        </td>
-                        <td>{{ port.dest }}</td>
-                        <td class="text-center" >{{ port.desc }}</td>
-                        <td class="text-center">
-                            <!-- GET аргументы для того, чтобы передать в suссess_url нужные параметры -->
-                            <a href="{% url 'main:port-update' port.id %}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}&place={{ equipment.place }}" class="btn-sm btn-circle btn-warning">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                        </td>
-                    </tr>
                     {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                    </td>
+                    <td>{{ port.dest }}</td>
+                    <td class="text-center" >{{ port.desc }}</td>
+                    <td class="text-center">
+                        <!-- GET аргументы для того, чтобы передать в suссess_url нужные параметры -->
+                        <a href="{% url 'main:port-update' port.id %}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}&place={{ equipment.place }}" class="btn-sm btn-warning">
+                            Изменить<!--<i class="fas fa-pen"></i> -->
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
     <!-- Конец элемента вкладки Оборудование -->
     <!-- Элемент вкладки Описание -->

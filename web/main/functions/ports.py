@@ -3,6 +3,17 @@ from ..models import Port, Vlan
 def port_dest_update(data, source_port):
     # если передается новый порт назначения
     if data.get('port'):
+        # пытаемся взять порт, если он был ранее и затереть его данные
+        try:
+            dest_port = Port.objects.get(id=source_port.dest_port_id)
+            dest_port.dest = ''
+            dest_port.busy = False
+            dest_port.dest_port_id = None
+            dest_port.desc = '-'
+            dest_port.full_path = ''
+            dest_port.save()
+        except:
+            pass
         dest_port = Port.objects.get(id=data.get('port'))
         # Редактируем порт назначения
         dest_port.busy = True

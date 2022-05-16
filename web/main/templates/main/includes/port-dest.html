@@ -3,13 +3,13 @@
     <div class="input-group">
         {{ field }}
         <div class="input-group-append">
-            <button id="change_dest" type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button id="change_dest" type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapseDest" aria-expanded="false" aria-controls="collapseDest">
                 Изменить
             </button>
         </div>
     </div>
     
-    <div class="collapse mt-2" id="collapseExample">
+    <div class="collapse mt-2" id="collapseDest">
         <div class="card card-body">
         <!-- выводим форму выбора порта назначения -->
         {% for field in dest_port_form %}

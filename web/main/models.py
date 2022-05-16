@@ -73,6 +73,9 @@ class Equipment(models.Model):
         ('', 'Выберите тип...'),
         ('active','Активное оборудование'),
         ('passive', 'Пассивное оборудование'),
+        ('server', 'Сервер'),
+        ('unmanageable', 'Неуправляемое оборудование'),
+        ('operator', 'Оборудование оператора связи'),
     )
 
     class Meta:
@@ -87,7 +90,8 @@ class Equipment(models.Model):
     place = models.CharField('Место', max_length=5)
     name = models.CharField('Наименование', max_length=100)
     owner = models.CharField('Владелец', max_length=50)
-    desc = models.CharField('Описание', max_length=500, blank=True)
+    desc = models.TextField('Описание', max_length=500, blank=True)
+    prefix = models.CharField('Префикс порта', max_length=15, blank=True, null=True)
     port_cnt = models.PositiveIntegerField('Количество портов')
 
     def __str__(self):
@@ -104,13 +108,14 @@ class Port(models.Model):
     equipment = models.ForeignKey(Equipment, verbose_name='Оборудование', related_name='ports', on_delete=models.CASCADE)
     type = models.CharField('Тип порта', max_length=6, choices=PORT_TYPES, default='access')
     vlan = models.ManyToManyField(Vlan, blank=True)
-    num = models.PositiveIntegerField('№ порта')
+    name = models.CharField('Наименование порта', max_length=20, null=True)
+    num = models.PositiveIntegerField('Номер порта', blank=True, null=True)
     busy = models.BooleanField('Порт занят', default=False)
     active = models.BooleanField('Порт включен', default=False)
-    dest = models.CharField('Куда', max_length=100, blank=True)
+    dest = models.CharField('Куда', max_length=100, blank=True, default='-')
     dest_port_id = models.PositiveIntegerField('ID порта назначения', blank=True, null=True)
     full_path = models.CharField('Полный путь', max_length=100, default='-', blank=True)
-    desc = models.CharField('Описание', max_length=100, default='-')
+    desc = models.TextField('Описание', max_length=500, blank=True, default='-')
 
     class Meta:
         db_table = 'port'
@@ -119,10 +124,4 @@ class Port(models.Model):
     
     def __str__(self):
         return (f'{self.equipment.rack.number}-{self.equipment.place}-{self.num}')
-
-
-class VlanToPort(models.Model):
-    class Meta:
-        db_table = 'vlan-to-port'
-        verbose_name = 'Vlan на порту'
 

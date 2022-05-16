@@ -26,7 +26,11 @@
 </head>
 
 <body id="page-top">
-
+    {% comment %} <div id="loading">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>       {% endcomment %}
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -342,6 +346,11 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    {% comment %} <script>
+        $(window).on('load', function () {
+          $('#loading').hide();
+        }) 
+    </script>          {% endcomment %}
     {% block scripts %}
     {% endblock scripts %}
 </body>

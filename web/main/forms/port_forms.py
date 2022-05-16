@@ -7,7 +7,7 @@ from ..models import Equipment, Port, Rack, Vlan
 class PortUpdateForm(forms.ModelForm):
     class Meta:
         model = Port
-        fields = ['type', 'vlan', 'active', 'dest', 'full_path', 'desc']
+        fields = ['active', 'type', 'vlan', 'dest', 'full_path', 'desc']
         # делаем поле назначения не редактируемым, чтобы пользователь воспользовался
         # зависимыми dropdown для правильного выбора порта назначения
         widgets = {
@@ -25,6 +25,7 @@ class PortUpdateForm(forms.ModelForm):
         # фильтруем queryset для отображения vlan только комплекса, к которому принадлежит оборудование
         self.fields['vlan'].queryset = Vlan.objects.filter(complex_id=self.complex_id)
         self.fields['vlan'].widget.attrs['style'] = 'display: none;'
+        self.fields['desc'].widget.attrs['rows'] = 5
         # каждому полю формы прописываем класс 'form-control'
         for field_name, field in self.fields.items():
             if field_name == 'active':
