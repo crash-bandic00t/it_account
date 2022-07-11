@@ -9,7 +9,6 @@
 <div class="row">
     <div class="col-12">
         <form method="post" enctype="multipart/form-data">
-            <!-- Форма редактирования порта --> 
             {% csrf_token %}
             {% for error in source_port_form.non_field_errors %}
             <div class="row mb-2 align-items-center">
@@ -29,10 +28,10 @@
             {% endif %}
             {% for field in source_port_form %}
             <div class="row mb-2 align-items-center">
-                {% if source_port.equipment.type == 'active' %}
+                {% if source_port.equipment.type == 'switch' or  source_port.equipment.type == 'router'%}
                     {% include 'main/includes/port-active-equipment.html' %}
-                {% elif source_port.equipment.type == 'operator' %}
-                    {% include 'main/includes/port-operator-equipment.html' %}
+                {% elif source_port.equipment.type == 'operator' or source_port.equipment.type == 'unmanageble'%}
+                    {% include 'main/includes/port-lite-edit.html' %}
                 {% endif %}
             </div>
             {% endfor %} 

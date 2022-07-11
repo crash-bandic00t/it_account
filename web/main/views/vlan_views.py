@@ -7,12 +7,6 @@ from ..models import Complex, Vlan
 from ..forms.vlan_forms import VlanForm, VlanUpdateForm
 
 
-def vlan(request, complex):
-    complex = Complex.objects.get(slug=complex)
-    return render(request, 'main/vlan/vlan.html', context={
-        'complex': complex
-    }) 
-
 # добавление влана
 class VlanAddView(CreateView):
     model = Vlan

@@ -8,7 +8,7 @@ from ..models import Equipment, Port, Rack
 class EquipmentForm(forms.ModelForm):
     class Meta:
         model = Equipment
-        fields = ['complex', 'rack', 'place', 'type', 'name', 'owner', 'desc', 'prefix', 'port_cnt']
+        fields = ['rack', 'complex', 'type', 'place',  'name', 'management', 'owner', 'desc', 'prefix', 'port_cnt']
         # замена стандартного сообщения об ошибке unique_together
         error_messages = {
             NON_FIELD_ERRORS: {
@@ -24,7 +24,7 @@ class EquipmentForm(forms.ModelForm):
         self.fields['desc'].widget.attrs['rows'] = 5
         # каждому полю формы прописываем класс 'form-control'
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['class'] = 'template form-control'
 
     # проверка места оборудования, чтобы 1 буква была из списка
     def clean_place(self):
@@ -39,7 +39,7 @@ class EquipmentForm(forms.ModelForm):
 class EquipmentUpdateForm(EquipmentForm):
     class Meta:
         model = Equipment
-        fields = ['complex', 'rack', 'place', 'type', 'name', 'owner', 'desc']
+        fields = ['complex', 'rack', 'type', 'place', 'type', 'name', 'owner', 'desc']
         error_messages = {
             'place': {
                 'unique': 'На этом месте уже есть оборудование!',

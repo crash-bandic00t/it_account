@@ -9,11 +9,12 @@ urlpatterns = [
     path('<slug:autozal_slug>/<int:rack_number>/', views.rack, name='rack'),
     path('<slug:autozal_slug>/<int:rack_number>/<str:place>', views.equipment, name='equipment-detail'),
 
-    path('vlan/<slug:complex>/', vlan_views.vlan, name='vlan'),
+    path('vlan/<slug:complex>/', views.vlan, name='vlan'),
 
     path('edit/equipment-add/', equipment_views.EquipmentAddView.as_view(), name='equipment-add'),
     path('edit/equipment-update/<int:pk>/', equipment_views.EquipmentUpdateView.as_view(), name='equipment-update'),
     path('edit/equipment-delete/<int:pk>/', equipment_views.EquipmentDeleteView.as_view(), name='equipment-delete'),
+
     path('edit/port-update/<int:pk>', port_views.port_update, name='port-update'),
     path('edit/port-clear/', port_views.port_clear, name='port-clear'),
 

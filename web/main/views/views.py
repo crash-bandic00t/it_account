@@ -1,8 +1,7 @@
 from django.shortcuts import redirect, render
-from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
-from ..models import Autozal, Port, Rack, Equipment
+from ..models import Autozal, Rack, Equipment, Complex
 
 #главная страница
 def index(request):
@@ -37,3 +36,10 @@ def equipment(request, autozal_slug, rack_number, place):
         'equipment': equipment,
     }
     return render(request, 'main/equipment/equipment-detail.html', data)
+
+# vlan в комплексе
+def vlan(request, complex):
+    complex = Complex.objects.get(slug=complex)
+    return render(request, 'main/vlan/vlan.html', context={
+        'complex': complex
+    }) 

@@ -71,9 +71,11 @@ class Rack(models.Model):
 class Equipment(models.Model):
     EQUPMENT_TYPES = (
         ('', 'Выберите тип...'),
-        ('active','Активное оборудование'),
-        ('passive', 'Пассивное оборудование'),
+        ('switch','Коммутатор'),
+        ('router', ' Маршрутизатор'),
         ('server', 'Сервер'),
+        ('cross', 'Кросс'),
+        ('patсh-panel', 'Патч-панель'),
         ('unmanageable', 'Неуправляемое оборудование'),
         ('operator', 'Оборудование оператора связи'),
     )
@@ -91,6 +93,7 @@ class Equipment(models.Model):
     name = models.CharField('Наименование', max_length=100)
     owner = models.CharField('Владелец', max_length=50)
     desc = models.TextField('Описание', max_length=500, blank=True)
+    management = models.CharField('IP управления', max_length=50, blank=True, null=True)
     prefix = models.CharField('Префикс порта', max_length=15, blank=True, null=True)
     port_cnt = models.PositiveIntegerField('Количество портов')
 
@@ -124,4 +127,25 @@ class Port(models.Model):
     
     def __str__(self):
         return (f'{self.equipment.rack.number}-{self.equipment.place}-{self.num}')
+
+
+class Interface(models.Model):
+    name = models.CharField('Наименование интерфеса', max_length=50)
+    port = models.ForeignKey(Port, verbose_name='Порт', related_name='interface', on_delete=models.CASCADE)
+    ip = models.CharField('IP интерфеса', max_length=50)
+    mask = models.CharField('Маска подсети', max_length=50, blank=True, null=True)
+    vlan = models.ForeignKey(Vlan, verbose_name='Vlan', related_name='interface', on_delete=models.CASCADE)
+    cost = models.PositiveIntegerField('Security level', blank=True, null=True)
+    gateway = models.CharField('GW интерфеса', max_length=50, blank=True, null=True)
+    desc = models.TextField('Описание', max_length=500, blank=True, default='-')
+
+
+
+    class Meta:
+        db_table = 'interface'
+        verbose_name = 'Интерфес'
+        verbose_name_plural = 'Интерфесы'
+    
+    def __str__(self):
+        return (f'{self.name}')
 

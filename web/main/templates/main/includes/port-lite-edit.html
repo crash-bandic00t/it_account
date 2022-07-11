@@ -1,5 +1,6 @@
 {% if field.name == 'vlan' %}
 {% elif field.name == 'active' %}
+{% elif field.name == 'type' %}
 {% else %}
 <div class="col-2">
     <label class="mb-0" for="{{ field.id_for_label }}">{{ field.label }}</label>

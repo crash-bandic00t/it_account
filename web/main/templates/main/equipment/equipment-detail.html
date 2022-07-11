@@ -14,40 +14,14 @@
 <div class="tab-content" id="myTabContent">
     <!-- Элемент вкладки Оборудование -->
     <div class="tab-pane fade mt-3 show active" id="equip" role="tabpanel" aria-labelledby="equip-tab">
-        {% if equipment.type == 'operator' %}
         <table class="table table-responsive table-bordered table-striped table-sm mt-3 text-center">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Interface</th>
-                    <th scope="col" style="min-width: 100px">Destination</th>
-                    <th scope="col" style="min-width: 200px">Description</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- перебор всех портов в оборудовании -->
-                {% for port in equipment.ports.all %}
-                <tr class="">
-                    <th>{{ port.name }}</th>
-                    <td>{{ port.dest }}</td>
-                    <td class="text-center" >{{ port.desc }}</td>
-                    <td class="text-center">
-                        <!-- GET аргументы для того, чтобы передать в suссess_url нужные параметры -->
-                        <a href="{% url 'main:port-update' port.id %}?autozal_slug={{ rack.autozal.slug }}&rack_number={{ rack.number }}&place={{ equipment.place }}" class="btn-sm btn-warning">
-                            Изменить<!--<i class="fas fa-pen"></i> -->
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <table class="table table-responsive table-bordered table-striped table-sm mt-3 text-center">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Interface</th>
+                    {% if equipment.type == 'switch'%}
                     <th scope="col" style="min-width: 100px">Type</th>
                     <th scope="col" style="min-width: 70px">Vlan</th>
+                    {% endif %}
                     <th scope="col" style="min-width: 100px">Destination</th>
                     <th scope="col" style="min-width: 200px">Description</th>
                     <th scope="col"></th>
@@ -63,6 +37,7 @@
                     {% else %}
                     <th scope="row" class="table-danger">{{ port.name }}</th>
                     {% endif %}
+                    {% if equipment.type == 'switch' %}
                     <td>{{ port.type }}</td>
                     <td>
                     <!-- вывод всех vlan на порту -->
@@ -75,6 +50,7 @@
                         {% endif %}
                     {% endfor %}
                     </td>
+                    {% endif %}
                     <td>{{ port.dest }}</td>
                     <td class="text-center" >{{ port.desc }}</td>
                     <td class="text-center">
@@ -87,7 +63,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% endif %}
+        {% comment %} {% endif %} {% endcomment %}
     </div>
     <!-- Конец элемента вкладки Оборудование -->
     <!-- Элемент вкладки Описание -->
